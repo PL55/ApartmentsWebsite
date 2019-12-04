@@ -27,8 +27,20 @@ app.post('/listing', function(req, res) {
     var listing = new Listing({
         title: req.body.title,
         monthlyRent: parseInt(req.body.monthlyRent),
-        imageURL: req.body.imageURL,
-     
+        rating: [],
+        
+        poster: {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            phoneNumber: parseInt(req.body.phoneNumber)
+        },
+        address: {
+            streetName: req.body.streetName,
+            city: req.body.city,
+            state: req.body.state,
+            zip: parseInt(req.body.zip)
+        }
+        
 
     });
 
@@ -40,7 +52,6 @@ app.post('/listing', function(req, res) {
 
 });
 
-
 app.get('/listing', function(req, res) {
     // Get all movies
     Listing.find({}, function(err, listings) {
@@ -48,6 +59,36 @@ app.get('/listing', function(req, res) {
         res.send(listings);
     });
 });
+
+app.post('/listing/:id/review', function(req, res){
+    Listing.findOne({_id: req.params.id}, function(err, listing){
+        if (err) throw err;
+        if(!listing) return res.send("no listing found");
+        /*
+        Listing.update(
+            {_id: req.params.id},
+            {$push: {rating: {
+                stars: req.body.stars,
+                name: req.body.name,
+                comment: req.body.comment,
+            }}}
+        );
+        */
+       listing.rating.push(
+           {
+            stars: req.body.stars,
+            name: req.body.name,
+            comment: req.body.comment, 
+           }
+       )
+        listing.save(function(err) {
+            if (err) throw err;
+            return res.send('Succesfully inserted listing.');
+        }); 
+    });
+  
+});
+
 
 
 
