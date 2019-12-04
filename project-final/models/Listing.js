@@ -19,11 +19,32 @@ var forSaleSchema = new mongoose.Schema({
     }
 });
 
-var movieSchema = new mongoose.Schema({
-    title: {
+var addressSchema = new mongoose.Schema({
+    street: {
         type: String,
         required: true
     },
+
+    city: {
+        type: String,
+        required: true
+    },
+
+    State: {
+        type: String,
+        required: true
+    },
+
+    Zipcode: {
+        type: Number,
+        required: true
+    }
+})
+
+var listingSchema = new mongoose.Schema({,
+
+    address: [addressSchema],
+
     year: {
         type: Number,
         min: 0,
@@ -37,5 +58,5 @@ var movieSchema = new mongoose.Schema({
     reviews: [reviewSchema] 
 });
 
-var Movie = mongoose.model('Movie', movieSchema);
-module.exports = Movie;
+var Listing = mongoose.model('Listing', movieSchema);
+module.exports = Listing;
