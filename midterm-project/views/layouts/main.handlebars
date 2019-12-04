@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="/public/css/main.css">
+  <title>Housing Listings</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+</head>
+<div class="nav">
+  <div>
+    <a href="/">Home</a>
+    <a href="/apartments">Apartments</a>
+    <a href="/houses">Houses</a>
+    <a href="/townhouses">Townhouses</a>
+    <a href="/expensive">Expensive housing</a>
+    <a href="/furnished">Furnished housing</a>
+    <a href="/listHousing">List housing</a>
+  </div>
+</div>
+
+<body>
+<div>
+    Search for a place by its name: <input type="text" id="search"></input>
+</div>
+<script>
+  $(document).ready(function(){
+    $("#search").keyup(function(){
+      var x = $("#search").val();
+      $.ajax({url: "/name_has/"+x, success: function(result){
+        var i = result.indexOf("<article>");
+        var j = result.indexOf("</article>");
+        var str = "";
+        while (i != -1 && j != -1) {
+          str += result.substring(i, j);
+          i = result.indexOf("<article>", j+1);
+          j = result.indexOf("</article>", j+1);
+        }
+        $("#bod").html(str);
+      }});
+    });
+  });
+</script>
+<div id = "bod">
+    {{{body}}}
+</div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+</body>
+
+</html>
+
+<script>

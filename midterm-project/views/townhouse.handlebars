@@ -1,0 +1,23 @@
+{{#each data}}
+<article>
+	<h2 class="title">
+		{{this.building}} for ${{this.price}} per month
+	</h2>
+	Furnished? {{this.furnished}}
+	<div class="content">	
+	Features:
+	<ul id = "myUL">
+		{{#each this.features}}
+			<li>{{this}}</li>
+		{{/each}}
+	<ul>
+	</div>
+	Contact at: {{this.contact}} 
+</article>
+{{else}}
+
+<article>
+    <h1>There are no listings. :(</h1>
+    <a href="/listHousing">Make a listing</a>
+</article>
+{{/each}}

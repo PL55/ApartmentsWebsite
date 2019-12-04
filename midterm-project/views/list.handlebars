@@ -1,0 +1,31 @@
+<h1>List New Housing</h1>
+<article>
+    <form method="POST" action="/listHousing">
+        <div class="input-field">
+            <label>Name of housing complex:</label>
+            <input type="text" name="building" size="50" placeholder="Apartment name, address...">
+        </div>
+         <div class="input-field">
+            <label>Rent cost:</label>
+            <input type="number" name="price" size="50" placeholder="price of rent">
+        </div>
+        <div class="input-field">
+            <label>Furnished?:</label>
+            <input type="text" name="furnished" size="50">
+        </div>
+        <div class="input-field">
+            <label>Phone number:</label>
+            <input type="text" name="contact" size="50" placeholder="xxx-xxx-xxxx">
+        </div>
+        <div class="input-field">
+            <label>Apartment, Townhouse, or House?</label>
+            <input type = "text" name = "housingType" size = "50">
+        </div>
+        <div class="input-field">
+            <label>Features (separated by commas):</label><br>
+            <textarea type="text" name="features" rows="10" placeholder="whatever, you, want..."></textarea>
+            </br>
+        </div>
+        <button type="submit">List housing </button>
+    </form>
+</article>
