@@ -85,6 +85,10 @@ app.get('/listingData', function(req, res){
     });
 });
 
+app.get('/description', function(req, res){
+    res.render('description');
+})
+
 app.get('/listing', function(req, res) {
     // Get all movies
     res.render("add");
