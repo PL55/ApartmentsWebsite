@@ -68,24 +68,27 @@ app.post('/listing', function(req, res) {
             state: req.body.state,
             zip: parseInt(req.body.zip)
         }
-        
-
     });
-
     // Save movie to database
     listing.save(function(err) {
         if (err) throw err;
-        return res.send('Succesfully inserted listing.');
+        res.redirect("/");
     });  
 
 });
 
 app.get('/listing', function(req, res) {
     // Get all movies
-    Listing.find({}, function(err, listings) {
-        if (err) throw err;
-        res.send(listings);
-    });
+    res.render("add");
+    // Listing.find({}, function(err, listings) {
+    //     if (err) throw err;
+    //     res.send(listings);
+    // });
+});
+
+app.get('/listing/:id/review', function(req, res) {
+    var send = '/listing/' + req.params.id + '/review';
+    res.render("addReview", {"id": send});
 });
 
 app.post('/listing/:id/review', function(req, res){
@@ -100,7 +103,7 @@ app.post('/listing/:id/review', function(req, res){
         });
         listingcheck.save(function(err) {
             if (err) throw err;
-            return res.send('Succesfully inserted listing.');
+            res.redirect("/"+req.params.id+"/getReview");
         });  
         
     });
@@ -115,6 +118,17 @@ app.get('/:id/getReview', function(req, res){
         return res.render('reviews', {'reviews': ret});
     });
 })
+
+app.delete('/listing/:id/deleteid', function(req, res){ 
+    Listing.findByIDAndRemove(req.params.id, function(err, listing){
+        if(err) throw err;
+        if (!listing) {
+            return res.send('No Listing with that ID');
+        }
+        res.send('Movie deleted!');
+    });
+})
+
 
 app.listen(3000, function() {
     console.log('App listening on port 3000!');
