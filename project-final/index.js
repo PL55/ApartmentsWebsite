@@ -77,6 +77,14 @@ app.post('/listing', function(req, res) {
 
 });
 
+// Get all movies
+app.get('/listingData', function(req, res){
+    Listing.find({}, function(err, listings){
+        if(err) throw err;
+        res.send(listings);
+    });
+});
+
 app.get('/listing', function(req, res) {
     // Get all movies
     res.render("add");
@@ -117,7 +125,7 @@ app.get('/:id/getReview', function(req, res){
         var ret = listingcheck.rating;
         return res.render('reviews', {'reviews': ret});
     });
-})
+});
 
 app.delete('/listing/:id/deleteid', function(req, res){ 
     Listing.findByIDAndRemove(req.params.id, function(err, listing){
@@ -128,6 +136,14 @@ app.delete('/listing/:id/deleteid', function(req, res){
         res.send('Movie deleted!');
     });
 })
+
+// Delete when rent is more than 1200
+app.delete('/listing/deleteExpensive', function(req, res){ 
+    Listing.deleteMany({"monthlyRent": {$gt: 1200}}, function(err){
+        if(err) throw err;
+        res.redirect('/');
+    });
+});
 
 
 app.listen(3000, function() {
