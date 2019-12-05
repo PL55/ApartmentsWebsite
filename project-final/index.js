@@ -44,7 +44,8 @@ mongoose.connection.on('error', function() {
 
 app.get('/', function(req, res) {
     Listing.find({}, function(err, listing) {
-        return res.render('home', {listing: listing});
+        console.log(listing);
+        return res.render('home', {'listing': listing});
     });
     //res.render("home");
 });
@@ -104,6 +105,16 @@ app.post('/listing/:id/review', function(req, res){
         
     });
 });
+
+app.get('/:id/getReview', function(req, res){
+    Listing.findOne({_id: req.params.id}, function(err, listingcheck){
+        if (err) throw err;
+        if(!listingcheck) return res.send("no listing found");
+        
+        var ret = listingcheck.rating;
+        return res.render('reviews', {'reviews': ret});
+    });
+})
 
 app.listen(3000, function() {
     console.log('App listening on port 3000!');
