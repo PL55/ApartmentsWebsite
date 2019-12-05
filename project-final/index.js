@@ -5,6 +5,8 @@ mongoose.Promise=global.Promise;
 var dotenv = require('dotenv');
 var Listing = require('./models/Listing');
 
+
+
 // Load envirorment variables
 dotenv.load();
 
@@ -17,10 +19,22 @@ mongoose.connection.on('error', function() {
     process.exit(1);
 });
 
+
 // Setup Express App
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.get('/', function(req,res){
+    results = []
+    Listing.find({}, function(err, listings) {
+        if (err) throw err;
+        results.push(listing);
+    });
+    res.render('home',{
+        results: results
+    });
+})
 
 app.post('/listing', function(req, res) {
     // Create new movie
@@ -61,33 +75,24 @@ app.get('/listing', function(req, res) {
 });
 
 app.post('/listing/:id/review', function(req, res){
-    Listing.findOne({_id: req.params.id}, function(err, listing){
+    Listing.findOne({_id: req.params.id}, function(err, listingcheck){
         if (err) throw err;
-        if(!listing) return res.send("no listing found");
-        /*
-        Listing.update(
-            {_id: req.params.id},
-            {$push: {rating: {
-                stars: req.body.stars,
-                name: req.body.name,
-                comment: req.body.comment,
-            }}}
-        );
-        */
-       listing.rating.push(
-           {
+        if(!listingcheck) return res.send("no listing found");
+        
+        listingcheck.rating.splice(listingcheck.rating.length, 0, {
             stars: req.body.stars,
             name: req.body.name,
             comment: req.body.comment, 
-           }
-       )
-        listing.save(function(err) {
+        });
+        listingcheck.save(function(err) {
             if (err) throw err;
             return res.send('Succesfully inserted listing.');
-        }); 
+        });  
+        
     });
-  
 });
+
+
 
 
 
