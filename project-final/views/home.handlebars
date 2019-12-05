@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-
-    </head>
-    <body>
-        {{#each results}}
-            <p> Title: {{this.title}}</p>
-        {{/each}}
-    </body>
-</html>
+<ul id="movList">
+{{#each listing}}
+<li>{{this.title}}</li>
+{{/each}}
+</ul>

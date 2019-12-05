@@ -1,17 +1,34 @@
 var express = require('express');
+var app = express();
 var bodyParser = require('body-parser');
+var exphbs = require('express-handlebars');
 var mongoose = require('mongoose');
-mongoose.Promise=global.Promise;
 var dotenv = require('dotenv');
-var Listing = require('./models/Listing');
 
 
+dotenv.load();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/public', express.static('public'));
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.set('view engine', 'handlebars');
+
+
+
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+// app.set('view engine', 'handlebars');
+// app.use('/public', express.static('public'));
 
 // Load envirorment variables
-dotenv.load();
+
 
 
 // Connect to MongoDB
+
+var Listing = require('./models/Listing');
+
 console.log(process.env.MONGODB)
 mongoose.connect(process.env.MONGODB);
 mongoose.connection.on('error', function() {
@@ -21,20 +38,16 @@ mongoose.connection.on('error', function() {
 
 
 // Setup Express App
-var app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+// var app = express();
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get('/', function(req,res){
-    results = []
-    Listing.find({}, function(err, listings) {
-        if (err) throw err;
-        results.push(listing);
+app.get('/', function(req, res) {
+    Listing.find({}, function(err, listing) {
+        return res.render('home', {listing: listing});
     });
-    res.render('home',{
-        results: results
-    });
-})
+    //res.render("home");
+});
 
 app.post('/listing', function(req, res) {
     // Create new movie
@@ -91,11 +104,6 @@ app.post('/listing/:id/review', function(req, res){
         
     });
 });
-
-
-
-
-
 
 app.listen(3000, function() {
     console.log('App listening on port 3000!');
