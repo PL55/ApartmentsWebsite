@@ -1,21 +1,28 @@
+
 # ApartmentsWebsite
 
 **Description:** This website is a place to list housing and reviews of the places
-
-**index.js:** Where the server side code is written
-*get requests:*
-	* '/' -> Sends to the home page and renders the home handlebar which is where all the housing is shown
-	* '/listingData' -> get the housing data from the MongoDB database
-	* '/description' -> renders the description handlebar which is the about me page
-	* '/listing' -> renders the add handlebar which is an html form to add a new listing
-	* '/listing/:id/review' -> renders the addReview handlebar which is an html form to add a review to housing corresponding to the id
+<body>
+	<p>index.js: Where the server side code is written</p>
+<ul>
+	<p>*get requests:*</p>
+	<li> '/' -> Sends to the home page and renders the home handlebar which is where all the housing is shown
+	<li> '/listingData' -> get the housing data from the MongoDB database
+	<li> '/description' -> renders the description handlebar which is the about me page
+	<li> '/listing' -> renders the add handlebar which is an html form to add a new listing
+	<li> '/listing/:id/review' -> renders the addReview handlebar which is an html form to add a review to housing corresponding to the id
 	* '/:id/getReview' -> renders the reviews handlebar and shows the reviews for the housing corresponding to the id
-*post requests:*
-	* '/listing' -> posts a listing with the parameters specified by the html form
-	* '/listing/:id/review' -> posts a review with the parameters specified by the html
-*delete requests:*
-	* '/listing/:id/deleteid' -> deletes a listing specified by the id parameter
-	* '/listing/deleteExpensive' -> deletes all expensive housing (over $1200)
+</ul>
+<ul>
+	<p>*post requests:*</p>
+	<li> '/listing' -> posts a listing with the parameters specified by the html form
+	<li> '/listing/:id/review' -> posts a review with the parameters specified by the html
+</ul>
+<ul>
+	<p>*delete requests:*</p>
+	<li> '/listing/:id/deleteid' -> deletes a listing specified by the id parameter
+	<li> '/listing/deleteExpensive' -> deletes all expensive housing (over $1200)
+</ul>
 
 **handlebars**
 *main.handlebars*
@@ -45,7 +52,7 @@
 	* Contains a street name, city, state, and zip code
 *listingSchema*
 	* Contains a title, monthly rent, rating, poster, and address
-
+</body>
 
 
 
